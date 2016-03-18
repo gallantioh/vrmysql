@@ -18,8 +18,8 @@ public class pushCube : MonoBehaviour
     void Start()
     {
           targetObject = GameObject.FindGameObjectWithTag("Table");
-        ct = FindObjectOfType(typeof(createTable)) as createTable;
-        
+          ct = FindObjectOfType(typeof(createTable)) as createTable;
+       
     }
 
     // Update is called once per frame
@@ -57,12 +57,25 @@ public class pushCube : MonoBehaviour
     {
         if (ShowGUI)
         {
-              targetObjects = GameObject.FindGameObjectsWithTag("nTable");
-              string [] sm = ct.populate();
+              targetObjects = GameObject.FindGameObjectsWithTag("Table");
+              GameObject[] sortedTOs = new GameObject[targetObjects.Length];
+
+            for (int j = 0, l = 0; j < 4; j++)
+            {
+               
+                for (int k = 0; k < 3; k++, l++)
+                {
+                sortedTOs[l] = GameObject.Find(k + "-" + j);
+                }
+                targetObjects = sortedTOs;
+            }
+
+            
+            string [] sm = ct.populate();
             
            
 
-              for (int i = 0, j = 0; j < sm.Length || i <  targetObjects.Length; i++, j++)
+              for (int i = 0; i <  targetObjects.Length; i++)
               {
             if (targetObjects[i])
             {
@@ -72,7 +85,7 @@ public class pushCube : MonoBehaviour
                 TextLocation.y = Screen.height - TextLocation.y;
                 TextLocation.x -= boxW * 0.5f;
                 TextLocation.y -= boxH * 0.5f;
-                GUI.Box(new Rect(TextLocation.x, TextLocation.y, boxW, boxH), sm[j]);
+                GUI.Box(new Rect(TextLocation.x, TextLocation.y, boxW, boxH), sm[i]);
             }
         }
     }

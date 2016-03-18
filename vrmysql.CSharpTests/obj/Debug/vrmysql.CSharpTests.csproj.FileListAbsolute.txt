@@ -1,0 +1,11 @@
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\obj\Debug\vrmysql.CSharpTests.csprojResolveAssemblyReference.cache
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\vrmysql.CSharpTests.dll
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\vrmysql.CSharpTests.pdb
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\Assembly-CSharp.dll
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\UnityEngine.dll
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\MySql.Data.dll
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\Assembly-CSharp.pdb
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\bin\Debug\UnityEngine.xml
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\obj\Debug\vrmysql.CSharpTests.dll
+C:\Users\RMD\Desktop\Unity_Projects\vrmysql\vrmysql.CSharpTests\obj\Debug\vrmysql.CSharpTests.pdb

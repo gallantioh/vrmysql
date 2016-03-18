@@ -8,18 +8,18 @@ public class createTable : MonoBehaviour
 {
 
     IDbConnection dbconn;
-
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Use this for initialization
     void Start()
     {
         string cstring = "Server=localhost;Database=rmd;User ID=root;Password=123;Pooling=false;";
         dbconn = new MySqlConnection(cstring);
     }
-
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*
     // Update is called once per frame
     void Update()
     {
-
+        // populate();
         if (Input.GetMouseButtonDown(0))
         {
             Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -33,6 +33,7 @@ public class createTable : MonoBehaviour
                 if (rhInfo.collider.name.Equals("tableSphere"))
                 {
                     //sph = GameObject.Find("tableSphere");
+                    
                     Destroy(sph, 0);
                     cTable();
                 }
@@ -47,10 +48,11 @@ public class createTable : MonoBehaviour
         }
 
     }
-
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*
     void cTable()
     {
-        //dbconn.Open();
+        if (dbconn.State.ToString().ToLower() == "closed") {dbconn.Open(); }
+        
         IDbCommand dbcmd1 = dbconn.CreateCommand();
         IDbCommand dbcmd2 = dbconn.CreateCommand();
 
@@ -78,18 +80,20 @@ public class createTable : MonoBehaviour
 
         print("Number of Records: " + rows + ", Number of Columns: " + cols);
 
-        for (var y = 0; y < cols; y++)
+        for (int x = 0; x < cols; x++)
         {
             xp += 0.3f;
             yp = GameObject.Find("tableSphere").transform.position.y;
-            for (var x = 0; x < rows; x++)
+            for (int y = 0; y < rows; y++)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
                 cube.AddComponent<db>();
                 cube.AddComponent<pushCube>();
-                cube.tag = "nTable";
-                cube.transform.localScale = GameObject.Find("Cube_1-1").transform.localScale;
+                cube.name = x + "-" + y;
+                cube.tag = "Table";
+                //cube.transform.localScale.Set(0.02f, 0.02f, 0.02f);
+                cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f); //GameObject.Find("Cube_1-1").transform.localScale;
                 cube.transform.position = new Vector3(xp, yp, zp);
 
                 yp += 0.3f;
@@ -98,7 +102,7 @@ public class createTable : MonoBehaviour
 
        
 
-        rd.Close(); populate();
+        rd.Close();// populate();
         rd = null;
         dbcmd1.Dispose();
         dbcmd1 = null;
@@ -106,43 +110,46 @@ public class createTable : MonoBehaviour
         dbconn = null;
 
     }
-
-    public string [] populate()
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*
+    public string [] populate(/*IDataReader rd*/)
     {
 
         // 
         string cstring = "Server=localhost;Database=rmd;User ID=root;Password=123;Pooling=false;";
         dbconn = new MySqlConnection(cstring);
-dbconn.Open();
+        dbconn.Open();
         IDbCommand dbcmd = dbconn.CreateCommand();
 
-        string sqlst = "SELECT * FROM a";
+        string sqlst = "SELECT COUNT(*) FROM a";
+        string sqlst2 = "SELECT * FROM a";
 
         dbcmd.CommandText = sqlst;
-
         IDataReader rd = dbcmd.ExecuteReader();
         rd.Read();
-        
         int rows = rd.GetInt32(0);
-        rows = rows * 2; // 2 is the number of cells in a record
-        string[] dtable = new string [rows];
-        
-        while (rd.Read())
-        {
-            int i = 0;
-            int num = (int)rd["num"];
-            dtable[i] = num.ToString();
-
-            string fname = (string)rd["fname"];
-            dtable[i+1] = fname;
-           // print(dtable[i]+"   "+dtable[i + 1]);
-            i++;
-        }
-       // print(dtable.Length);
+        rows = rows * 3 + 1; // 2 is the number of cells in a record
         rd.Close();
         dbcmd.Dispose();
-       // dbconn.Close();
 
+        dbcmd = dbconn.CreateCommand();
+        dbcmd.CommandText = sqlst2;
+        rd = dbcmd.ExecuteReader();
+
+        string[] dtable = new string[rows];
+        int i = 0;
+
+        while (rd.Read())
+        {
+            
+            dtable[i] = rd["num"].ToString();
+            dtable[i + 1] = (string)rd["fname"];
+            dtable[i + 2] = (string)rd["lname"];
+            i += 3;
+           
+        }
+        rd.Close();
+        dbcmd.Dispose();
+     
         return dtable; // return an array of records
     }
 
