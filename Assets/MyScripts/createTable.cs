@@ -32,8 +32,6 @@ public class createTable : MonoBehaviour
 
                 if (rhInfo.collider.name.Equals("tableSphere"))
                 {
-                    //sph = GameObject.Find("tableSphere");
-                    
                     Destroy(sph, 0);
                     cTable();
                 }
@@ -80,9 +78,9 @@ public class createTable : MonoBehaviour
 
         print("Number of Records: " + rows + ", Number of Columns: " + cols);
 
-        for (int x = 0; x < cols; x++)
+        for (int x = 0; x < cols; x++, xp += 0.3f)
         {
-            xp += 0.3f;
+            //xp += 0.3f;
             yp = GameObject.Find("tableSphere").transform.position.y;
             for (int y = 0; y < rows; y++)
             {
@@ -94,9 +92,9 @@ public class createTable : MonoBehaviour
                 cube.tag = "Table";
                 //cube.transform.localScale.Set(0.02f, 0.02f, 0.02f);
                 cube.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f); //GameObject.Find("Cube_1-1").transform.localScale;
-                cube.transform.position = new Vector3(xp, yp, zp);
+                cube.transform.position = new Vector3(xp, yp + 1, zp);
 
-                yp += 0.3f;
+                yp -= 0.3f;
             }
         }
 

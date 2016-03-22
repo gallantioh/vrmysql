@@ -20,9 +20,10 @@ public class db : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+       /* if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("I pushed");
+            int i = 0;
+            Debug.Log("I pushed " + ++i);
             Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit rhInfo;
             bool didHit = Physics.Raycast(toMouse, out rhInfo, 500.0f);
@@ -34,7 +35,7 @@ public class db : MonoBehaviour {
             {
                 Debug.Log("jack");
             }
-        }
+        }*/
     }
 
     public void dbMain()

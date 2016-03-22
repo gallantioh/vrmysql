@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+
 
 public class pushCube : MonoBehaviour
 {
 
     float boxW = 60f;
-    float boxH = 20f;
+    float boxH = 25f;
     public GameObject targetObject;
     public GameObject [] targetObjects;
-    public createTable ct;
+    public database ct;
 
     public bool ShowGUI = false;
     public string TagToUse = "Table";
@@ -18,7 +20,7 @@ public class pushCube : MonoBehaviour
     void Start()
     {
           targetObject = GameObject.FindGameObjectWithTag("Table");
-          ct = FindObjectOfType(typeof(createTable)) as createTable;
+          ct = FindObjectOfType(typeof(database)) as database;
        
     }
 
@@ -60,10 +62,10 @@ public class pushCube : MonoBehaviour
               targetObjects = GameObject.FindGameObjectsWithTag("Table");
               GameObject[] sortedTOs = new GameObject[targetObjects.Length];
 
-            for (int j = 0, l = 0; j < 4; j++)
+            for (int j = 0, l = 0; j < 5; j++)
             {
                
-                for (int k = 0; k < 3; k++, l++)
+                for (int k = 0; k < 4; k++, l++)
                 {
                 sortedTOs[l] = GameObject.Find(k + "-" + j);
                 }
@@ -71,8 +73,13 @@ public class pushCube : MonoBehaviour
             }
 
             
-            string [] sm = ct.populate();
-            
+            string [] sm = ct.getTableContent("a");
+            /*int w = 0;
+            while (w<sm.Length)
+            {
+                print(sm[w++]);
+            }*/
+           
            
 
               for (int i = 0; i <  targetObjects.Length; i++)
@@ -85,7 +92,9 @@ public class pushCube : MonoBehaviour
                 TextLocation.y = Screen.height - TextLocation.y;
                 TextLocation.x -= boxW * 0.5f;
                 TextLocation.y -= boxH * 0.5f;
-                GUI.Box(new Rect(TextLocation.x, TextLocation.y, boxW, boxH), sm[i]);
+                    try { GUI.Box(new Rect(TextLocation.x, TextLocation.y, boxW, boxH), sm[i]); }
+                    catch (IndexOutOfRangeException ) {; }
+                
             }
         }
     }
