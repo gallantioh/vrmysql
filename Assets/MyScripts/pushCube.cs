@@ -11,6 +11,7 @@ public class pushCube : MonoBehaviour
     public GameObject targetObject;
     public GameObject [] targetObjects;
     public database ct;
+    public string tName;
 
     public bool ShowGUI = false;
     public string TagToUse = "Table";
@@ -61,27 +62,20 @@ public class pushCube : MonoBehaviour
         {
               targetObjects = GameObject.FindGameObjectsWithTag("Table");
               GameObject[] sortedTOs = new GameObject[targetObjects.Length];
+              int[] nt = ct.nOfRecs("a");
 
-            for (int j = 0, l = 0; j < 5; j++)
+            for (int j = 0, l = 0; j < nt[0]; j++)
             {
                
-                for (int k = 0; k < 4; k++, l++)
+                for (int k = 0; k < nt[1]; k++, l++)
                 {
                 sortedTOs[l] = GameObject.Find(k + "-" + j);
                 }
                 targetObjects = sortedTOs;
             }
 
-            
             string [] sm = ct.getTableContent("a");
-            /*int w = 0;
-            while (w<sm.Length)
-            {
-                print(sm[w++]);
-            }*/
-           
-           
-
+          
               for (int i = 0; i <  targetObjects.Length; i++)
               {
             if (targetObjects[i])
@@ -93,9 +87,9 @@ public class pushCube : MonoBehaviour
                 TextLocation.x -= boxW * 0.5f;
                 TextLocation.y -= boxH * 0.5f;
                     try { GUI.Box(new Rect(TextLocation.x, TextLocation.y, boxW, boxH), sm[i]); }
-                    catch (IndexOutOfRangeException ) {; }
-                
-            }
+                    catch (Exception ) {; }//IndexOutOfRangeException
+
+                }
         }
     }
 }

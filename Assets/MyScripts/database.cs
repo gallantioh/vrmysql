@@ -120,13 +120,13 @@ public class database : MonoBehaviour {
         }
     }
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*
-    public void nOfRecs(string tName) // return recods number its void now change it
+    public int [] nOfRecs(string tName) // return recods number its void now change it
     {
         openConnDb();
             IDbCommand dbcmd = dbconn.CreateCommand();
         string sqlcmd = "SELECT COUNT(*) FROM " + tName + ";" +
             "SELECT COUNT(*) FROM information_schema.columns where table_name = '" + tName + "';";
- 
+        int [] recs = new int[2];
         try
         {
             if (openConnDb().ToLower() == "open")
@@ -135,22 +135,26 @@ public class database : MonoBehaviour {
                 IDataReader read = dbcmd.ExecuteReader();
                 read.Read();
 
-                int rows = read.GetInt32(0);
+                recs[0] = read.GetInt32(0);
                 read.NextResult();
                 read.Read();
-                int cols = read.GetInt32(0);
+                recs[1] = read.GetInt32(0);
 
                 read.Close();
                 dbcmd.Dispose();
 
-                print("rows: " + rows + "colomns: " + cols);
+                //print("rows: " + recs[0] + "colomns: " + recs[1]);
                 closeConnDb();
+
+                return recs;
+               
             }
         }
         catch (Exception e)
         {
             print(e.Message);
         }
+            return null;
     }
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*
     public string[] getTableContent(string tName)
